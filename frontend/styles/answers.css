@@ -1,0 +1,185 @@
+/* Fonts */
+@font-face {
+  font-family: "Museo Sans Cyrl";
+  src: local("Museo Sans Cyrl");
+  src: url("../static/fonts/museosanscyrl-500.ttf");
+}
+@font-face {
+  font-family: "Museo Sans Cyrl Bold";
+  src: local("Museo Sans Cyrl");
+  src: url("../static/fonts/museosanscyrl-700.ttf");
+}
+/* Colors */
+/* Fonts */
+@font-face {
+  font-family: "Museo Sans Cyrl";
+  src: local("Museo Sans Cyrl");
+  src: url("../static/fonts/museosanscyrl-500.ttf");
+}
+@font-face {
+  font-family: "Museo Sans Cyrl Bold";
+  src: local("Museo Sans Cyrl");
+  src: url("../static/fonts/museosanscyrl-700.ttf");
+}
+/* Colors */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-weight: 500;
+}
+
+a {
+  color: #6933DC;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.header {
+  padding: 40px 0;
+  border-bottom: 1px solid #DCDCF3;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: "Museo Sans Cyrl Bold", sans-serif;
+  font-weight: 700;
+}
+.title span {
+  color: #6933DC;
+  font-family: inherit;
+}
+
+.btn {
+  text-align: center;
+  height: 48px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-size: 17px;
+  color: white;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: 0.1s;
+  padding: 12px;
+}
+.btn:hover {
+  transform: scale(1.05);
+}
+.btn:disabled {
+  background-color: #DCDCF3;
+  cursor: not-allowed;
+}
+
+a.btn {
+  display: inline-block;
+}
+
+.footer {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.footer-text {
+  font-size: 13px;
+  color: #DCDCF3;
+}
+
+.answers {
+  padding-top: 20px;
+}
+
+.answers-bread-crumbs-link {
+  color: #DCDCF3;
+  font-size: 20px;
+}
+
+.answers-bread-crumbs-current {
+  font-size: 20px;
+  color: #6933DC;
+  margin-left: 10px;
+}
+
+.answers-title {
+  font-family: "Museo Sans Cyrl Bold", sans-serif;
+  font-weight: 700;
+  font-size: 54px;
+  margin-top: 60px;
+  margin-bottom: 10px;
+}
+
+.answers-author {
+  font-size: 20px;
+  color: #333333;
+}
+
+.answers-user {
+  color: #6933DC;
+}
+
+.answers-box {
+  padding: 30px 0;
+}
+
+.answers-answer {
+  font-family: "Museo Sans Cyrl Bold", sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  color: #333333;
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+.answers-answer span {
+  color: #6933DC;
+}
+
+.answers-user-answer {
+  font-size: 20px;
+  line-height: 24px;
+  color: #333333;
+  position: relative;
+  margin-left: 33px;
+}
+.answers-user-answer:not(:last-child) {
+  margin-bottom: 20px;
+}
+.answers-user-answer::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #6933DC;
+  border-radius: 50%;
+  box-sizing: border-box;
+  left: -33px;
+  top: 2px;
+}
+.answers-user-answer.correct {
+  color: green;
+}
+.answers-user-answer.correct::before {
+  border-width: 6px;
+  border-color: green;
+}
+.answers-user-answer.uncorrect {
+  color: red;
+}
+.answers-user-answer.uncorrect::before {
+  border-width: 6px;
+  border-color: red;
+}
+
+.answers-link-box {
+  margin-top: 20px;
+  text-align: end;
+}
+
+.answers-back-link {
+  font-size: 20px;
+  color: #6933DC;
+}/*# sourceMappingURL=answers.css.map */

@@ -1,0 +1,39 @@
+@import 'variables';
+@import 'common';
+
+.main {
+    padding-top: 190px;
+    padding-bottom: 232px;
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.main-content {
+    max-width: 588px;
+}
+
+.main-content-title {    
+    font-size: 54px;
+}
+
+.main-content-text {
+    max-width: 486px;
+    margin-top: 40px;
+    line-height: 24px;
+    color: $main_color;
+    font-size: 20px;
+}
+
+.main-content-btn {
+    margin-top: 60px;
+    width: 166px;
+    background-color: $accent_color;
+}
+
+.main-img {
+    max-width: 588px;
+}

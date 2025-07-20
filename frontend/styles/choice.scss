@@ -1,0 +1,47 @@
+@import 'variables';
+@import 'common';
+
+.choice {
+    padding: 180px 0 227px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.choice-content {
+    max-width: 583px;
+}
+
+.choice-content-title {
+    font-size: 48px;
+}
+
+.choice-content-text {
+    font-size: 18px;
+    color: $main_color;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+.choice-option-arrow{
+    display: none;
+}
+.choice-option {
+    box-sizing: border-box;
+    background: $main_bg;
+    border: 1px solid $retouch_color;
+    font-size: 18px;
+    color: $main_color;
+    padding: 26px 31px 26px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:hover{
+        border-left: 5px solid $accent_color;
+        color: $accent_color;
+        @include text-700;
+    }
+    &:hover .choice-option-arrow{
+        display: block;
+    }
+}

@@ -1,0 +1,30 @@
+/* Fonts */
+@font-face {
+    font-family: 'Museo Sans Cyrl';
+    src: local('Museo Sans Cyrl');
+    src: url('../static/fonts/museosanscyrl-500.ttf');
+}
+
+@font-face {
+    font-family: 'Museo Sans Cyrl Bold';
+    src: local('Museo Sans Cyrl');
+    src: url('../static/fonts/museosanscyrl-700.ttf');
+}
+
+@mixin text-700 {
+    font-family: 'Museo Sans Cyrl Bold', sans-serif;
+    font-weight: 700;
+}
+
+@mixin text-500 {
+    font-family: 'Museo Sans Cyrl', sans-serif;
+    font-weight: 500;
+}
+
+/* Colors */
+$main_color: #333333;
+$main_bg: white;
+$accent_color: #6933DC;
+$reverse_accent_color: white;
+$retouch_color: #DCDCF3;
+

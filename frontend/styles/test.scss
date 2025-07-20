@@ -1,0 +1,174 @@
+@import 'variables';
+@import 'common';
+
+.test {
+    padding: 20px 0 50px;
+}
+
+.test-pre-title {
+    font-size: 20px;
+    color: $retouch_color;
+}
+
+.test-progress-bar {
+    margin-top: 60px;
+    margin-bottom: 80px;
+    display: flex;
+}
+
+.progress-bar-item-circle {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: $retouch_color;
+}
+
+.progress-bar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin-right: 130px;
+
+    &:not(:last-child)::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        width: 184px;
+        height: 6px;
+        background-color: $retouch_color;
+        left: 30px;
+        top: 10px;
+    }
+
+    &.complete:not(:last-child)::before,
+    &.complete .progress-bar-item-circle,
+    &.active .progress-bar-item-circle {
+        background-color: $accent_color;
+    }
+
+    &.active .progress-bar-item-circle::after {
+        content: '';
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        z-index: 1;
+        background-color: $retouch_color;
+        left: calc(50% - 7px);
+        top: 6px;
+    }
+}
+
+
+.progress-bar-item-text {
+    font-size: 13px;
+    color: $main_color;
+    margin-top: 10px;
+}
+
+.test-question {
+    font-size: 36px;
+}
+
+.test-question-options {
+    margin-top: 40px;
+    min-height: 356px;
+}
+
+.test-question-option {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    line-height: 24px;
+    color: $main_color;
+    cursor: pointer;
+
+    input {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 3px solid $accent_color;
+        border-radius: 50%;
+        display: grid;
+        place-content: center;
+
+        &::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            box-shadow: inset 10px 10px $accent_color;
+            transition: .2s ease transform;
+            transform: scale(0);
+        }
+
+        &:checked::before {
+            transform: scale(1);
+        }
+    }
+
+    input,
+    label {
+        cursor: pointer;
+    }
+}
+
+.test-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.test-actions-time {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 17px;
+    color: $accent_color;
+}
+
+.test-actions-time-clock {
+    background-image: url('../static/images/clock.svg');
+    background-size: contain;
+    width: 33px;
+    height: 33px;
+    text-align: center;
+    font-size: 10px;
+    color: $main_color;
+    place-content: center;
+}
+
+.test-actions-prev,
+.test-actions-next {
+    width: 132px;
+    background-color: transparent;
+    border-color: $accent_color;
+    color: $accent_color;
+
+    &:disabled {
+        background-color: transparent;
+        border-color: $retouch_color;
+        color: $retouch_color;
+    }
+}
+
+.test-action-skip-box {
+    text-align: end;
+}
+
+.test-action-skip {
+    text-decoration: none;
+    color: $accent_color;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 17px;    
+}
+
+.disabled {
+    color: $retouch_color;
+    pointer-events: none;
+    cursor: default;
+}

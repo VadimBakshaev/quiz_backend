@@ -1,0 +1,37 @@
+@import 'variables';
+@import 'common';
+
+.result {
+    padding: 140px 0 91px;
+    background-image: url('../static/images/question_marks.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    text-align: center;
+}
+
+.result-title {
+    @include text-700;
+    font-size: 54px;
+    max-width: 588px;
+    margin: 0 auto 60px;
+}
+
+.result-score {
+    background-image: url('../static/images/result.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include text-700;
+    font-size: 158px;
+    color: $reverse_accent_color;
+    padding: 100px 112px;
+}
+
+.result-answers-link-box {
+    text-align: end;
+}
+
