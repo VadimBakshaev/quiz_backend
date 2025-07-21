@@ -167,5 +167,11 @@ a.btn {
 .form-btn {
   width: 267px;
   background-color: #6933DC;
-  margin-top: 60px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.form-link {
+  font-size: 12px;
+  color: #333333;
 }/*# sourceMappingURL=form.css.map */
