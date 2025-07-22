@@ -3,8 +3,14 @@ import { Choice } from "./components/choice.js";
 import { Test } from "./components/test.js";
 import { Result } from "./components/result.js";
 import { Answers } from "./components/answers.js";
+import { Auth } from "./services/auth.js";
 export class Router {
     constructor() {
+        this.contentEl = document.getElementById('content');
+        this.stylesEl = document.getElementById('styles');
+        this.titleEl = document.getElementById('title');
+        this.profileEl = document.querySelector('.profile');
+        this.profileUserEl = document.querySelector('.profile-user');
         this.routes = [
             {
                 route: '#/',
@@ -72,15 +78,27 @@ export class Router {
         ]
     };
     async openRoute() {
+        if(window.location.hash==='#/logout'){  
+            await Auth.logout();
+            location.href='#/';
+            return;
+        };
         const newRoute = this.routes.find(item => { return item.route === window.location.hash });
         if (!newRoute) {
             window.location.href = '#/';
             return;
         };
-        document.getElementById('content').innerHTML =
-            await fetch(newRoute.template).then(response => response.text());
-        document.getElementById('styles').setAttribute('href',newRoute.styles);
-        document.getElementById('title').innerText = newRoute.title;
+        this.contentEl.innerHTML = await fetch(newRoute.template).then(response => response.text());
+        this.stylesEl.setAttribute('href',newRoute.styles);
+        this.titleEl.innerText = newRoute.title;
+        const userInfo = Auth.getUserInfo();
+        const accessToken = localStorage.getItem('accessToken');
+        if(userInfo&&accessToken){
+            this.profileEl.style.display='flex';
+            this.profileUserEl.innerText=userInfo.fullName;
+        }else{
+            this.profileEl.style.display='none';
+        }
         newRoute.load();
     }
 }

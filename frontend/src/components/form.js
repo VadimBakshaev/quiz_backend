@@ -1,3 +1,7 @@
+import config from "../../config/config.js";
+import { Auth } from "../services/auth.js";
+import { CustomHttp } from "../services/custom-http.js";
+
 export class Form {
     constructor(page) {
         this.formElement = null;
@@ -15,7 +19,7 @@ export class Form {
             {
                 name: 'password',
                 element: null,
-                regex: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
+                regex: /^(?=.*[0-9])(?=.*)[a-zA-Z0-9!@#$%^&*]{6,16}$/,
                 valid: false
             }
         ];
@@ -78,37 +82,47 @@ export class Form {
     };
     async processForm() {
         if (this.validateForm()) {
+            const email = this.fields.find(item => item.name === 'email').element.value;
+            const password = this.fields.find(item => item.name === 'password').element.value;
             if (this.page === 'signup') {
                 try {
-                    const response = await fetch('http://localhost:3000/api/signup', {
-                        method: "POST",
-                        headers: {
-                            'Content-type': 'application/json',
-                            'Accept': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            'name': this.fields.find(item => item.name === 'firstName').element.value,
-                            'lastName': this.fields.find(item => item.name === 'lastName').element.value,
-                            'email': this.fields.find(item => item.name === 'email').element.value,
-                            'password': this.fields.find(item => item.name === 'password').element.value
-                        })
+                    const result = await CustomHttp.request(config.host + '/signup', 'POST', {
+                        'name': this.fields.find(item => item.name === 'firstName').element.value,
+                        'lastName': this.fields.find(item => item.name === 'lastName').element.value,
+                        'email': email,
+                        'password': password
                     });
-                    const result = await response.json();
-                    if (response.status < 200 || response.status >= 300) {
-                        throw new Error(response.message);
-                    };
+
                     if (result) {
                         if (result.error || !result.user) {
                             throw new Error(result.message);
-                        };
-                        location.href = '#/choice';
+                        };                        
                     };
                 } catch (error) {
-                    console.log(error);
+                   return console.log(error);
                 };
-            } else {
-
             };
+            try {
+                const result = await CustomHttp.request(config.host + '/login', 'POST', {
+                    'email': email,
+                    'password': password
+                });
+
+                if (result) {
+                    if (result.error || !result.accessToken || !result.refreshToken || !result.fullName || !result.userId) {
+                        throw new Error(result.message);
+                    };
+                    Auth.setTokens(result.accessToken, result.refreshToken);
+                    Auth.setUserInfo({
+                        fullName:result.fullName,
+                        userId:result.userId
+                    });
+                    location.href = '#/choice';
+                };
+            } catch (error) {
+                console.log(error);
+            };
+
             // const user = {};
             // this.fields.forEach(item => {
             //     user[item.name] = item.element.value;

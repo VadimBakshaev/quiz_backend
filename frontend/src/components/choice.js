@@ -1,20 +1,24 @@
+import { CustomHttp } from "../services/custom-http.js";
 import { checkUserData } from "../utils/common.js";
 export class Choice {
     constructor() {
         this.quizzes = [];
-        checkUserData();
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://testologia.ru/get-quizzes', false);
-        xhr.send();
-        if (xhr.status === 200 && xhr.responseText) {
-            try {
-                this.quizzes = JSON.parse(xhr.responseText);
-            } catch (e) {
-                console.log(e);
+        this.init();
+
+    };
+
+    async init() {
+        try {
+            const result = await CustomHttp.request('http://localhost:3000/api/tests');
+            if (result) {
+                if (result.error) {
+                    throw new Error(result.error);
+                };
+                this.quizzes = result;
+                this.processQuizzes();
             };
-            this.processQuizzes();
-        } else {
-            console.log(xhr.status);
+        } catch (error) {
+            console.log(error);
         };
     };
 
