@@ -23,9 +23,10 @@
     margin-bottom: 60px;
 }
 
-.choice-option-arrow{
+.choice-option-arrow {
     display: none;
 }
+
 .choice-option {
     box-sizing: border-box;
     background: $main_bg;
@@ -36,12 +37,33 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    &:hover{
+    position: relative;
+    width: 583px;
+
+    &:hover {
         border-left: 5px solid $accent_color;
         color: $accent_color;
         @include text-700;
     }
-    &:hover .choice-option-arrow{
+
+    &:hover .choice-option-arrow {
         display: block;
+    }
+}
+
+.choice-option-result {
+    position: absolute;
+    z-index: 2;
+    right: 18px;
+    top: 16px;
+    border: 1px solid $accent_color;
+    padding: 5px;
+    font-size: 12px;
+    color: $accent_color;
+    background-color: white;
+    text-align: center;
+
+    div:first-child {
+        margin-bottom: 3px;
     }
 }

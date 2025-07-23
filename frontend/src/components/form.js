@@ -4,10 +4,15 @@ import { CustomHttp } from "../services/custom-http.js";
 
 export class Form {
     constructor(page) {
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            location.href = '#/choice';
+            return;
+        };
+        this.page = page;
         this.formElement = null;
         this.agreeElement = null;
         this.processElement = null;
-        this.page = page;
         const that = this;
         this.fields = [
             {
@@ -96,10 +101,10 @@ export class Form {
                     if (result) {
                         if (result.error || !result.user) {
                             throw new Error(result.message);
-                        };                        
+                        };
                     };
                 } catch (error) {
-                   return console.log(error);
+                    return console.log(error);
                 };
             };
             try {
@@ -114,8 +119,8 @@ export class Form {
                     };
                     Auth.setTokens(result.accessToken, result.refreshToken);
                     Auth.setUserInfo({
-                        fullName:result.fullName,
-                        userId:result.userId
+                        fullName: result.fullName,
+                        userId: result.userId
                     });
                     location.href = '#/choice';
                 };
@@ -123,13 +128,6 @@ export class Form {
                 console.log(error);
             };
 
-            // const user = {};
-            // this.fields.forEach(item => {
-            //     user[item.name] = item.element.value;
-            // });
-
-            // sessionStorage.setItem('user', JSON.stringify(user));
-            // location.href = '#/choice';
         };
     };
 };

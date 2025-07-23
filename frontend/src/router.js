@@ -8,7 +8,7 @@ export class Router {
     constructor() {
         this.contentEl = document.getElementById('content');
         this.stylesEl = document.getElementById('styles');
-        this.titleEl = document.getElementById('title');
+        this.titleEl = document.getElementById('page-title');
         this.profileEl = document.querySelector('.profile');
         this.profileUserEl = document.querySelector('.profile-user');
         this.routes = [
@@ -78,26 +78,26 @@ export class Router {
         ]
     };
     async openRoute() {
-        if(window.location.hash==='#/logout'){  
+        if (location.hash === '#/logout') {
             await Auth.logout();
-            location.href='#/';
+            location.href = '#/';
             return;
         };
-        const newRoute = this.routes.find(item => { return item.route === window.location.hash });
+        const newRoute = this.routes.find(item => { return item.route === location.hash });
         if (!newRoute) {
-            window.location.href = '#/';
+            location.href = '#/';
             return;
         };
         this.contentEl.innerHTML = await fetch(newRoute.template).then(response => response.text());
-        this.stylesEl.setAttribute('href',newRoute.styles);
+        this.stylesEl.setAttribute('href', newRoute.styles);
         this.titleEl.innerText = newRoute.title;
         const userInfo = Auth.getUserInfo();
         const accessToken = localStorage.getItem('accessToken');
-        if(userInfo&&accessToken){
-            this.profileEl.style.display='flex';
-            this.profileUserEl.innerText=userInfo.fullName;
-        }else{
-            this.profileEl.style.display='none';
+        if (userInfo && accessToken) {
+            this.profileEl.style.display = 'flex';
+            this.profileUserEl.innerText = userInfo.fullName;
+        } else {
+            this.profileEl.style.display = 'none';
         }
         newRoute.load();
     }

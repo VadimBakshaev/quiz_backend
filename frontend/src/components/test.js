@@ -1,4 +1,6 @@
-import { checkUserData,getRequest } from "../utils/common.js";
+import config from "../../config/config.js";
+import { Auth } from "../services/auth.js";
+import { CustomHttp } from "../services/custom-http.js";
 export class Test {
     constructor() {
         this.titleEl = null;
@@ -10,13 +12,24 @@ export class Test {
         this.skipEl = null;
         this.currentQuestionIndex = 1;
         this.userResult = [];
-        checkUserData();
-        const user = JSON.parse(sessionStorage.getItem('user'));
-        if (user.id) {
-            this.quiz = getRequest('https://testologia.ru/get-quiz?id=' + user.id);
-            this.startQuiz();
-        } else {
-            console.log(user.id);
+        this.user = Auth.getUserInfo();
+        this.init();
+    };
+    async init() {
+        if (this.user) {
+            try {
+                const result = await CustomHttp.request(config.host + '/tests/' + this.user.dataId);
+                if (result) {
+                    if (result.error) {
+
+                        throw new Error(result.error);
+                    };
+                    this.quiz = result;
+                    this.startQuiz();
+                };
+            } catch (error) {
+                console.log(error);
+            };
         };
     };
     startQuiz() {
@@ -41,11 +54,10 @@ export class Test {
 
         const timer = document.querySelector('.test-actions-time-clock');
         let seconds = 59;
-        const interval = setInterval(function () {
+        this.interval = setInterval(function () {
             timer.innerText = seconds;
             seconds--;
-            if (seconds === 0) {
-                clearInterval(interval);
+            if (seconds === 0) {                
                 this.complete();
             };
         }.bind(this), 1000)
@@ -169,33 +181,24 @@ export class Test {
 
         this.showQuestion();
     };
-    complete() {
-        const user = JSON.parse(sessionStorage.getItem('user'));
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'https://testologia.ru/pass-quiz?id=' + user.id, false);
-        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-        xhr.send(JSON.stringify({
-            name: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            results: this.userResult
-        }));
-        if (xhr.status === 200 && xhr.responseText) {
-            let result = null;
-            try {
-                result = JSON.parse(xhr.responseText);
-            } catch (e) {
-                console.log(e);
-            };
+    async complete() {
+        clearInterval(this.interval);
+        try {
+            const result = await CustomHttp.request(config.host + '/tests/' + this.user.dataId + '/pass', 'POST', {
+                userId: this.user.userId,
+                results: this.userResult
+            });
             if (result) {
-                user.results = this.userResult;
-                user.score = result.score;
-                user.total = result.total;
-                sessionStorage.setItem('user', JSON.stringify(user));
-                location.href = `#/result`;
-            }
-        } else {
-            console.log(xhr.status);
+                if (result.error) {
+                    throw new Error(result.error);
+                };
+                this.user.score = result.score;
+                this.user.total = result.total;
+                Auth.setUserInfo(this.user);
+                location.href = '#/result';
+            };
+        } catch (error) {
+            console.log(error);
         };
     };
 };

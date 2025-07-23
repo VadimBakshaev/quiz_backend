@@ -148,6 +148,8 @@ a.btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  width: 583px;
 }
 .choice-option:hover {
   border-left: 5px solid #6933DC;
@@ -157,4 +159,20 @@ a.btn {
 }
 .choice-option:hover .choice-option-arrow {
   display: block;
+}
+
+.choice-option-result {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  top: 16px;
+  border: 1px solid #6933DC;
+  padding: 5px;
+  font-size: 12px;
+  color: #6933DC;
+  background-color: white;
+  text-align: center;
+}
+.choice-option-result div:first-child {
+  margin-bottom: 3px;
 }/*# sourceMappingURL=choice.css.map */

@@ -18,11 +18,12 @@ export class Auth {
                     this.setTokens(result.accessToken, result.refreshToken);
                     return true;
                 };
+            } else {
+                this.removeTokens();
+                location.href = '#/';
+                return false;
             };
         };
-        this.removeTokens();
-        location.href = '#/';
-        return false;
     };
     static async logout() {
         const refreshToken = localStorage.getItem('refreshToken');

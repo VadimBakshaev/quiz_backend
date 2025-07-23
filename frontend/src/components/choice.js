@@ -1,25 +1,40 @@
+import config from "../../config/config.js";
+import { Auth } from "../services/auth.js";
 import { CustomHttp } from "../services/custom-http.js";
-import { checkUserData } from "../utils/common.js";
 export class Choice {
     constructor() {
         this.quizzes = [];
+        this.testResults = null;
         this.init();
-
+        this.user = Auth.getUserInfo();
     };
 
     async init() {
         try {
-            const result = await CustomHttp.request('http://localhost:3000/api/tests');
+            const result = await CustomHttp.request(config.host + '/tests');
             if (result) {
                 if (result.error) {
                     throw new Error(result.error);
                 };
                 this.quizzes = result;
-                this.processQuizzes();
             };
         } catch (error) {
-            console.log(error);
+            return console.log(error);
         };
+        if (this.user) {
+            try {
+                const result = await CustomHttp.request(config.host + '/tests/results?userId=' + this.user.userId);
+                if (result) {
+                    if (result.error) {
+                        throw new Error(result.error);
+                    };
+                    this.testResults = result;
+                };
+            } catch (error) {
+                return console.log(error);
+            };
+        };
+        this.processQuizzes();
     };
 
     processQuizzes() {
@@ -41,6 +56,14 @@ export class Choice {
                 const choiseArrowEl = document.createElement('div');
                 choiseArrowEl.className = 'choice-option-arrow';
 
+                const result = this.testResults.find(item => item.testId === quiz.id);
+                if (result) {
+                    const choiceResultEl = document.createElement('div');
+                    choiceResultEl.className = 'choice-option-result';
+                    choiceResultEl.innerHTML = `<div>Результат</div><div>${result.score}/${result.total}</div>`;
+                    choiseEl.appendChild(choiceResultEl);
+                };
+
                 const choiseArrowImgEl = document.createElement('img');
                 choiseArrowImgEl.setAttribute('src', './static/images/arrow.svg');
                 choiseArrowImgEl.setAttribute('alt', 'Arrow to right');
@@ -54,12 +77,14 @@ export class Choice {
     };
 
     chooseQuiz(element) {
-        const datId = element.getAttribute('data-id');
-        if (datId) {
-            const user = JSON.parse(sessionStorage.getItem('user'));
-            user.id = datId;
-            sessionStorage.setItem('user', JSON.stringify(user));
-            location.href = '#/test';
+        const dataId = element.getAttribute('data-id');
+        if (dataId) {
+            const user = Auth.getUserInfo();
+            if (user) {
+                user.dataId = dataId;
+                Auth.setUserInfo(user);
+                location.href = '#/test';
+            };
         };
     };
 };
