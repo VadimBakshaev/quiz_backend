@@ -24,7 +24,7 @@ export class Form {
             {
                 name: 'password',
                 element: null,
-                regex: /^(?=.*[0-9])(?=.*)[a-zA-Z0-9!@#$%^&*]{6,16}$/,
+                regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{6,}$/,
                 valid: false
             }
         ];
@@ -120,7 +120,8 @@ export class Form {
                     Auth.setTokens(result.accessToken, result.refreshToken);
                     Auth.setUserInfo({
                         fullName: result.fullName,
-                        userId: result.userId
+                        userId: result.userId,
+                        email: email
                     });
                     location.href = '#/choice';
                 };

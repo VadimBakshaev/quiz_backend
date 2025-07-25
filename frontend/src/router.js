@@ -4,6 +4,7 @@ import { Test } from "./components/test.js";
 import { Result } from "./components/result.js";
 import { Answers } from "./components/answers.js";
 import { Auth } from "./services/auth.js";
+
 export class Router {
     constructor() {
         this.contentEl = document.getElementById('content');
@@ -100,5 +101,5 @@ export class Router {
             this.profileEl.style.display = 'none';
         }
         newRoute.load();
-    }
+    };
 }

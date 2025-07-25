@@ -1,6 +1,7 @@
 import config from "../../config/config.js";
 import { Auth } from "../services/auth.js";
 import { CustomHttp } from "../services/custom-http.js";
+
 export class Test {
     constructor() {
         this.titleEl = null;
@@ -21,7 +22,6 @@ export class Test {
                 const result = await CustomHttp.request(config.host + '/tests/' + this.user.dataId);
                 if (result) {
                     if (result.error) {
-
                         throw new Error(result.error);
                     };
                     this.quiz = result;

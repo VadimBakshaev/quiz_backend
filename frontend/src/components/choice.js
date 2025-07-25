@@ -1,6 +1,7 @@
 import config from "../../config/config.js";
 import { Auth } from "../services/auth.js";
 import { CustomHttp } from "../services/custom-http.js";
+
 export class Choice {
     constructor() {
         this.quizzes = [];
