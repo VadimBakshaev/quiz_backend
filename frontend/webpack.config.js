@@ -9,6 +9,11 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         clean: true,
     },
+    mode: 'development',
+    devServer: {            
+            compress: true,
+            port: 8080,            
+        },
     plugins: [
         new HtmlWebpackPlugin({
             template: './index.html'

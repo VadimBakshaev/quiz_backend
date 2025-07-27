@@ -66,7 +66,7 @@ export class Choice {
                 };
 
                 const choiseArrowImgEl = document.createElement('img');
-                choiseArrowImgEl.setAttribute('src', './static/images/arrow.svg');
+                choiseArrowImgEl.setAttribute('src', './images/arrow.svg');
                 choiseArrowImgEl.setAttribute('alt', 'Arrow to right');
 
                 choiseArrowEl.appendChild(choiseArrowImgEl);
